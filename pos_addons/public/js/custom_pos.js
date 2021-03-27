@@ -106,19 +106,14 @@ class PItm extends POSItems {
 				options: 'Vehicle Manufacturers',
 				onchange: () => {
 					this.filter_items();
-					
-					// this.vehicle_make.get_value() ? vm_ref.disabled = false : vm_ref.disabled = true; 
-					// const item_group = this.item_group_field.get_value();
-					// if (item_group) {
-					// 	this.filter_items({ item_group: item_group });
-					// }
-					// var sf = document.querySelector("input[data-fieldname=search_field]");
-					// sf.value = sf.value;
+					this.vehicle_make.get_value() ? this.vehicles_model.input.disabled = false:this.vehicles_model.input.disabled = true; 
 				},
 			},
 			parent: this.wrapper.find('.vehicle-make'),
 			render_input: true
 		});
+		
+
 		// Vehicle Model
 		this.vehicles_model = frappe.ui.form.make_control({
 			df: {
@@ -128,6 +123,14 @@ class PItm extends POSItems {
 				options: 'Vehicles Model',
 				onchange: () => {
 					this.filter_items();
+					this.vehicles_model.get_value() ? this.model_year.input.disabled = false:this.model_year.input.disabled = true;
+					if(this.vehicles_model.get_value()){
+						this.model_year.input.disabled = false;
+						this.engine.input.disabled = false;
+					} else {
+						this.model_year.input.disabled = true;
+						this.engine.input.disabled = true;
+					}
 				},
 				get_query: () => {
 					return {
@@ -141,6 +144,7 @@ class PItm extends POSItems {
 			parent: this.wrapper.find('.vehicle-model'),
 			render_input: true
 		});
+		this.vehicles_model.input.disabled = true;
 		// Model Year
 		this.model_year = frappe.ui.form.make_control({
 			df: {
@@ -154,7 +158,8 @@ class PItm extends POSItems {
 			parent: this.wrapper.find('.vehicle-year'),
 			render_input: true
 		});
-		// Model Year
+		this.model_year.input.disabled = true;
+		// Model Engine
 		this.engine = frappe.ui.form.make_control({
 			df: {
 				label: frappe._('Engine'),
@@ -167,6 +172,7 @@ class PItm extends POSItems {
 			parent: this.wrapper.find('.vehicle-engine'),
 			render_input: true
 		});
+		this.engine.input.disabled = true;
 	}
 	
 
